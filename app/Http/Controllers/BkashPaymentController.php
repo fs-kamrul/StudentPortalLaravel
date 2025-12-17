@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use App\Models\Testimonial;
+use App\Models\PaymentTransaction;
 
 class BkashPaymentController extends Controller
 {
@@ -94,6 +95,16 @@ class BkashPaymentController extends Controller
                 'testimonial_id' => $testimonial->id,
             ]);
 
+            // Log payment transaction
+            PaymentTransaction::create([
+                'payment_id' => $data['paymentID'],
+                'student_id' => $student->id,
+                'testimonial_id' => $testimonial->id,
+                'amount' => $testimonial->payment_amount,
+                'currency' => 'BDT',
+                'status' => 'pending',
+            ]);
+
             // Redirect to Bkash payment page
             return redirect($data['bkashURL']);
         }
@@ -113,6 +124,10 @@ class BkashPaymentController extends Controller
         $status = $request->get('status');
 
         if ($status === 'cancel' || $status === 'failure') {
+            // Update transaction status
+            PaymentTransaction::where('payment_id', $paymentID)
+                ->update(['status' => $status === 'cancel' ? 'cancelled' : 'failed']);
+
             return redirect()->route('student.testimonials.index')
                 ->with('error', 'Payment was cancelled or failed.');
         }
@@ -133,6 +148,14 @@ class BkashPaymentController extends Controller
             $data = $response->json();
 
             if (isset($data['transactionStatus']) && $data['transactionStatus'] === 'Completed') {
+                // Update transaction status
+                PaymentTransaction::where('payment_id', $paymentID)
+                    ->update([
+                        'status' => 'completed',
+                        'transaction_id' => $data['trxID'],
+                        'customer_msisdn' => $data['customerMsisdn'] ?? null,
+                    ]);
+
                 // Update testimonial payment status
                 $testimonial->bkash_transaction_id = $data['trxID'];
                 $testimonial->bkash_phone_number = $data['customerMsisdn'] ?? '';
@@ -143,6 +166,12 @@ class BkashPaymentController extends Controller
                     ->with('success', 'Payment successful! Transaction ID: ' . $data['trxID']);
             }
         }
+
+
+
+        // Update transaction status to failed if execution fails or status is not Completed
+        PaymentTransaction::where('payment_id', $paymentID)
+            ->update(['status' => 'failed']);
 
         return redirect()->route('student.testimonials.index')
             ->with('error', 'Payment execution failed. Please contact support.');
