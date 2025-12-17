@@ -7,6 +7,12 @@
     <!-- Header -->
     <div class="row mb-4">
         <div class="col-12">
+            @if(session('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
             <div class="d-flex justify-content-between align-items-center">
                 <h2>All Testimonials</h2>
                 <a href="{{ route('admin.dashboard') }}" class="btn btn-outline-secondary">
@@ -25,8 +31,9 @@
                     <select name="status" id="status" class="form-select">
                         <option value="">All Status</option>
                         <option value="pending" {{ $filterStatus == 'pending' ? 'selected' : '' }}>Pending</option>
-                        <option value="approved" {{ $filterStatus == 'approved' ? 'selected' : '' }}>Approved</option>
-                        <option value="rejected" {{ $filterStatus == 'rejected' ? 'selected' : '' }}>Rejected</option>
+                        <option value="processing" {{ $filterStatus == 'processing' ? 'selected' : '' }}>Processing</option>
+                        <option value="completed" {{ $filterStatus == 'completed' ? 'selected' : '' }}>Completed</option>
+                        <option value="delivered" {{ $filterStatus == 'delivered' ? 'selected' : '' }}>Delivered</option>
                     </select>
                 </div>
                 
@@ -76,24 +83,26 @@
                         <tbody>
                             @foreach($testimonials as $testimonial)
                                 <tr>
-                                    <td>{{ $testimonial->testimonial_id }}</td>
+                                    <td>{{ $testimonial->id }}</td>
                                     <td>{{ $testimonial->student->name ?? 'N/A' }}</td>
                                     <td>{{ $testimonial->student_id }}</td>
                                     <td>{{ $testimonial->gpa }}</td>
                                     <td>
-                                        @if($testimonial->status == 'approved')
-                                            <span class="badge bg-success">✓ Approved</span>
-                                        @elseif($testimonial->status == 'pending')
-                                            <span class="badge bg-warning">⏳ Pending</span>
+                                        @if($testimonial->status == 'delivered')
+                                            <span class="badge bg-success">✓ Delivered</span>
+                                        @elseif($testimonial->status == 'completed')
+                                            <span class="badge bg-primary">Completed</span>
+                                        @elseif($testimonial->status == 'processing')
+                                            <span class="badge bg-info text-dark">Processing</span>
                                         @else
-                                            <span class="badge bg-danger">✗ {{ ucfirst($testimonial->status) }}</span>
+                                            <span class="badge bg-warning text-dark">⏳ Pending</span>
                                         @endif
                                     </td>
                                     <td>
                                         @if($testimonial->payment_status == 'paid')
                                             <span class="badge bg-success">✓ Paid</span>
                                         @elseif($testimonial->payment_status == 'pending')
-                                            <span class="badge bg-warning">⏳ Pending</span>
+                                            <span class="badge bg-warning text-dark">⏳ Pending</span>
                                         @else
                                             <span class="badge bg-danger">✗ Unpaid</span>
                                         @endif
@@ -102,7 +111,45 @@
                                     <td>{{ $testimonial->bkash_transaction_id ?? '-' }}</td>
                                     <td>{{ $testimonial->created_at->format('M d, Y') }}</td>
                                     <td>
-                                        <a href="#" class="btn btn-sm btn-info">View</a>
+                                        <div class="dropdown" style="position: static;">
+                                            <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-boundary="viewport">
+                                                Actions
+                                            </button>
+                                            <ul class="dropdown-menu dropdown-menu-end">
+                                                <li><a class="dropdown-item" href="#">View Details</a></li>
+                                                @if($testimonial->status != 'delivered')
+                                                    <li><hr class="dropdown-divider"></li>
+                                                    <li><h6 class="dropdown-header">Update Status</h6></li>
+                                                    
+                                                    @if($testimonial->status == 'pending')
+                                                        <li>
+                                                            <form action="{{ route('admin.testimonials.updateStatus', ['id' => $testimonial->id, 'status' => 'processing']) }}" method="POST">
+                                                                @csrf
+                                                                <button type="submit" class="dropdown-item">Mark as Processing</button>
+                                                            </form>
+                                                        </li>
+                                                    @endif
+                                                    
+                                                    @if($testimonial->status == 'processing')
+                                                        <li>
+                                                            <form action="{{ route('admin.testimonials.updateStatus', ['id' => $testimonial->id, 'status' => 'completed']) }}" method="POST">
+                                                                @csrf
+                                                                <button type="submit" class="dropdown-item">Mark as Completed</button>
+                                                            </form>
+                                                        </li>
+                                                    @endif
+                                                    
+                                                    @if($testimonial->status == 'completed')
+                                                        <li>
+                                                            <form action="{{ route('admin.testimonials.updateStatus', ['id' => $testimonial->id, 'status' => 'delivered']) }}" method="POST">
+                                                                @csrf
+                                                                <button type="submit" class="dropdown-item">Mark as Delivered</button>
+                                                            </form>
+                                                        </li>
+                                                    @endif
+                                                @endif
+                                            </ul>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach

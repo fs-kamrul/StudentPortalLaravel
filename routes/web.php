@@ -67,7 +67,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/dashboard', [\App\Http\Controllers\AdminDashboardController::class, 'index'])->name('dashboard');
         Route::get('/students', [\App\Http\Controllers\AdminStudentController::class, 'index'])->name('students.index');
         Route::get('/students/{id}', [\App\Http\Controllers\AdminStudentController::class, 'show'])->name('students.show');
+        // Testimonial Routes
         Route::get('/testimonials', [\App\Http\Controllers\AdminTestimonialController::class, 'index'])->name('testimonials.index');
+        Route::post('/testimonials/{id}/status/{status}', [\App\Http\Controllers\AdminTestimonialController::class, 'updateStatus'])->name('testimonials.updateStatus');
+        
         Route::post('/students/{id}/reset-password', [\App\Http\Controllers\AdminStudentController::class, 'resetPassword'])->name('students.resetPassword');
         Route::post('/students/reset-all-passwords', [\App\Http\Controllers\AdminStudentController::class, 'resetAllPasswords'])->name('students.resetAllPasswords');
         

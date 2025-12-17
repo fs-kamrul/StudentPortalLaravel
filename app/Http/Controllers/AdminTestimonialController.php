@@ -35,4 +35,23 @@ class AdminTestimonialController extends Controller
         
         return view('admin.testimonials.index', compact('admin', 'testimonials', 'filterStatus', 'filterPaymentStatus'));
     }
+
+    /**
+     * Update testimonial status
+     */
+    public function updateStatus(Request $request, $id, $status)
+    {
+        $testimonial = Testimonial::findOrFail($id);
+        
+        // Validate status transition
+        $validStatuses = ['pending', 'processing', 'completed', 'delivered'];
+        if (!in_array($status, $validStatuses)) {
+            return redirect()->back()->with('error', 'Invalid status provided.');
+        }
+        
+        $testimonial->status = $status;
+        $testimonial->save();
+        
+        return redirect()->back()->with('success', 'Testimonial status updated to ' . ucfirst($status) . ' successfully!');
+    }
 }

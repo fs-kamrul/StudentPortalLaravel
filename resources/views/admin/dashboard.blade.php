@@ -103,7 +103,7 @@
                                 <tbody>
                                     @foreach($testimonials as $testimonial)
                                         <tr>
-                                            <td>{{ $testimonial->testimonial_id }}</td>
+                                            <td>{{ $testimonial->id }}</td>
                                             <td>{{ $testimonial->student->name ?? 'N/A' }}</td>
                                             <td>{{ $testimonial->student_id }}</td>
                                             <td>{{ $testimonial->gpa }}</td>
@@ -143,7 +143,7 @@
                                                 <h6 class="mb-1">{{ $testimonial->student->name ?? 'N/A' }}</h6>
                                                 <small class="text-muted">ID: {{ $testimonial->student_id }}</small>
                                             </div>
-                                            <span class="badge bg-primary">{{ $testimonial->testimonial_id }}</span>
+                                            <span class="badge bg-primary">{{ $testimonial->id }}</span>
                                         </div>
                                         
                                         <div class="row mb-2">
