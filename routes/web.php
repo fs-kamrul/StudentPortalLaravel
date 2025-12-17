@@ -6,6 +6,9 @@ use App\Http\Controllers\StudentAuthController;
 
 // Default route - redirect to login or dashboard based on authentication
 Route::get('/', function () {
+    if (Auth::guard('admin')->check()) {
+        return redirect()->route('admin.dashboard');
+    }
     if (Auth::guard('student')->check()) {
         return redirect()->route('student.dashboard');
     }
@@ -41,3 +44,38 @@ Route::prefix('bkash')->name('bkash.')->middleware('student.auth')->group(functi
     Route::get('/payment/{testimonial_id}', [\App\Http\Controllers\BkashPaymentController::class, 'createPayment'])->name('payment');
     Route::get('/callback/{testimonial_id}', [\App\Http\Controllers\BkashPaymentController::class, 'callback'])->name('callback');
 });
+
+
+// Admin Root Redirect
+Route::get('/admin', function () {
+    if (Auth::guard('admin')->check()) {
+        return redirect()->route('admin.dashboard');
+    }
+    return redirect()->route('admin.login');
+});
+
+// Admin Authentication Routes
+Route::prefix('admin')->name('admin.')->group(function () {
+    // Guest routes (not authenticated)
+    Route::middleware('guest:admin')->group(function () {
+        Route::get('/login', [\App\Http\Controllers\AdminAuthController::class, 'showLoginForm'])->name('login');
+        Route::post('/login', [\App\Http\Controllers\AdminAuthController::class, 'login']);
+    });
+
+    // Authenticated routes
+    Route::middleware('admin.auth')->group(function () {
+        Route::get('/dashboard', [\App\Http\Controllers\AdminDashboardController::class, 'index'])->name('dashboard');
+        Route::get('/students', [\App\Http\Controllers\AdminStudentController::class, 'index'])->name('students.index');
+        Route::get('/students/{id}', [\App\Http\Controllers\AdminStudentController::class, 'show'])->name('students.show');
+        Route::get('/testimonials', [\App\Http\Controllers\AdminTestimonialController::class, 'index'])->name('testimonials.index');
+        Route::post('/students/{id}/reset-password', [\App\Http\Controllers\AdminStudentController::class, 'resetPassword'])->name('students.resetPassword');
+        Route::post('/students/reset-all-passwords', [\App\Http\Controllers\AdminStudentController::class, 'resetAllPasswords'])->name('students.resetAllPasswords');
+        
+        // Change Password Routes
+        Route::get('/change-password', [\App\Http\Controllers\AdminAuthController::class, 'showChangePasswordForm'])->name('password.change');
+        Route::post('/change-password', [\App\Http\Controllers\AdminAuthController::class, 'changePassword'])->name('password.update');
+        
+        Route::post('/logout', [\App\Http\Controllers\AdminAuthController::class, 'logout'])->name('logout');
+    });
+});
+
