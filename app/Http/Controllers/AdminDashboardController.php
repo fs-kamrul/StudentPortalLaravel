@@ -21,6 +21,7 @@ class AdminDashboardController extends Controller
         $totalStudents = Student::count();
         $pendingTestimonials = Testimonial::where('status', 'pending')->count();
         $approvedTestimonials = Testimonial::where('status', 'approved')->count();
+        $totalTestimonials = Testimonial::count();
         
         // Get recent testimonials with student info and payment status
         $testimonials = Testimonial::with('student')
@@ -28,6 +29,6 @@ class AdminDashboardController extends Controller
             ->limit(10)
             ->get();
         
-        return view('admin.dashboard', compact('admin', 'totalStudents', 'pendingTestimonials', 'approvedTestimonials', 'testimonials'));
+        return view('admin.dashboard', compact('admin', 'totalStudents', 'pendingTestimonials', 'approvedTestimonials', 'testimonials', 'totalTestimonials'));
     }
 }

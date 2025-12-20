@@ -66,7 +66,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <p class="text-muted mb-1">Total Testimonials</p>
-                            <h3 class="mb-0">{{ $pendingTestimonials + $approvedTestimonials }}</h3>
+                            <h3 class="mb-0">{{ $totalTestimonials }}</h3>
                         </div>
                         <div style="font-size: 2rem;">📄</div>
                     </div>
