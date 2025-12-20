@@ -36,6 +36,10 @@ Route::prefix('student')->name('student.')->group(function () {
         Route::get('/testimonials', [\App\Http\Controllers\TestimonialController::class, 'index'])->name('testimonials.index');
         Route::get('/testimonials/create', [\App\Http\Controllers\TestimonialController::class, 'create'])->name('testimonials.create');
         Route::post('/testimonials', [\App\Http\Controllers\TestimonialController::class, 'store'])->name('testimonials.store');
+        
+        // Result routes
+        Route::get('/result', [\App\Http\Controllers\ResultController::class, 'index'])->name('result.index');
+        Route::post('/result/show', [\App\Http\Controllers\ResultController::class, 'show'])->name('result.show');
     });
 });
 

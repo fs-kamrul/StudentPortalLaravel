@@ -85,6 +85,10 @@
                         <span class="menu-icon">📖</span>
                         <span class="menu-text">Attendance</span>
                     </a>
+                    <a href="{{ route('student.result.index') }}" class="menu-item {{ request()->routeIs('student.result.*') ? 'active' : '' }}">
+                        <span class="menu-icon">🎯</span>
+                        <span class="menu-text">Result</span>
+                    </a>
                 </div>
 
                 <!-- Resources -->
