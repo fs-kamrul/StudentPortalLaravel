@@ -45,6 +45,13 @@ Route::prefix('bkash')->name('bkash.')->middleware('student.auth')->group(functi
     Route::get('/callback/{testimonial_id}', [\App\Http\Controllers\BkashPaymentController::class, 'callback'])->name('callback');
 });
 
+// Admin Bkash Payment Routes
+Route::prefix('admin/bkash')->name('admin.bkash.')->middleware('admin.auth')->group(function () {
+    Route::get('/payment/{testimonial_id}', [\App\Http\Controllers\AdminBkashPaymentController::class, 'createPayment'])->name('payment');
+    Route::get('/callback/{testimonial_id}', [\App\Http\Controllers\AdminBkashPaymentController::class, 'callback'])->name('callback');
+});
+
+
 
 // Admin Root Redirect
 Route::get('/admin', function () {
@@ -69,7 +76,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/students/{id}', [\App\Http\Controllers\AdminStudentController::class, 'show'])->name('students.show');
         // Testimonial Routes
         Route::get('/testimonials', [\App\Http\Controllers\AdminTestimonialController::class, 'index'])->name('testimonials.index');
+        Route::get('/testimonials/create', [\App\Http\Controllers\AdminTestimonialController::class, 'create'])->name('testimonials.create');
+        Route::post('/testimonials', [\App\Http\Controllers\AdminTestimonialController::class, 'store'])->name('testimonials.store');
         Route::post('/testimonials/{id}/status/{status}', [\App\Http\Controllers\AdminTestimonialController::class, 'updateStatus'])->name('testimonials.updateStatus');
+        Route::post('/testimonials/{id}/payment-status/{payment_status}', [\App\Http\Controllers\AdminTestimonialController::class, 'updatePaymentStatus'])->name('testimonials.updatePaymentStatus');
         
         Route::post('/students/{id}/reset-password', [\App\Http\Controllers\AdminStudentController::class, 'resetPassword'])->name('students.resetPassword');
         Route::post('/students/reset-all-passwords', [\App\Http\Controllers\AdminStudentController::class, 'resetAllPasswords'])->name('students.resetAllPasswords');

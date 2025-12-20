@@ -11,7 +11,7 @@
     <!-- Custom CSS -->
     <link href="{{ asset('css/custom_style.css') }}" rel="stylesheet">
     
-    @yield('styles')
+    @stack('styles')
 </head>
 <body>
     <!-- Navbar -->
@@ -149,6 +149,6 @@
         }
     </script>
 
-    @yield('scripts')
+    @stack('scripts')
 </body>
 </html>

@@ -15,9 +15,14 @@
             @endif
             <div class="d-flex justify-content-between align-items-center">
                 <h2>All Testimonials</h2>
-                <a href="{{ route('admin.dashboard') }}" class="btn btn-outline-secondary">
-                    ← Back to Dashboard
-                </a>
+                <div>
+                    <a href="{{ route('admin.testimonials.create') }}" class="btn btn-primary me-2">
+                        <i class="bi bi-plus-circle"></i> Create New Testimonial
+                    </a>
+                    <a href="{{ route('admin.dashboard') }}" class="btn btn-outline-secondary">
+                        ← Back to Dashboard
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -117,6 +122,24 @@
                                             </button>
                                             <ul class="dropdown-menu dropdown-menu-end">
                                                 <li><a class="dropdown-item" href="#">View Details</a></li>
+                                                
+                                                <!-- Payment Status Update -->
+                                                @if($testimonial->payment_status != 'paid')
+                                                    <li><hr class="dropdown-divider"></li>
+                                                    <li><h6 class="dropdown-header">Update Payment</h6></li>
+                                                    <li>
+                                                        <a href="{{ route('admin.bkash.payment', $testimonial->id) }}" class="dropdown-item text-primary">
+                                                            💳 Pay via Bkash
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <form action="{{ route('admin.testimonials.updatePaymentStatus', ['id' => $testimonial->id, 'payment_status' => 'paid']) }}" method="POST">
+                                                            @csrf
+                                                            <button type="submit" class="dropdown-item text-success">✓ Mark as Paid</button>
+                                                        </form>
+                                                    </li>
+                                                @endif
+                                                
                                                 @if($testimonial->status != 'delivered')
                                                     <li><hr class="dropdown-divider"></li>
                                                     <li><h6 class="dropdown-header">Update Status</h6></li>
