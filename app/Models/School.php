@@ -11,10 +11,13 @@ class School extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'school_name',
+        's_name',
+        's_address',
+        's_code',
+        'email',
+        'phone_number',
         'logo',
-        'address',
-        'mobile',
-        'email'
+        'site_url',
+        'favicon'
     ];
 }
