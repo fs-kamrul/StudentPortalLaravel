@@ -168,6 +168,8 @@
                                                 <button type="button" class="btn btn-sm btn-info text-white" onclick="openBuilderBankModal('knowledge', 'sub_question_a')">🔍 Browse Bank</button>
                                             </div>
                                             <textarea name="sub_question_a" id="builder_sub_question_a" class="form-control form-control-sm" rows="1" required></textarea>
+                                            <input type="hidden" name="sub_question_a_id" id="builder_sub_question_a_id">
+                                        </div>
                                         </div>
                                     </div>
                                     <!-- Slot খ -->
@@ -178,6 +180,8 @@
                                                 <button type="button" class="btn btn-sm btn-info text-white" onclick="openBuilderBankModal('comprehension', 'sub_question_b')">🔍 Browse Bank</button>
                                             </div>
                                             <textarea name="sub_question_b" id="builder_sub_question_b" class="form-control form-control-sm" rows="1" required></textarea>
+                                            <input type="hidden" name="sub_question_b_id" id="builder_sub_question_b_id">
+                                        </div>
                                         </div>
                                     </div>
                                     <!-- Slot গ -->
@@ -188,6 +192,8 @@
                                                 <button type="button" class="btn btn-sm btn-info text-white" onclick="openBuilderBankModal('application', 'sub_question_c')">🔍 Browse Bank</button>
                                             </div>
                                             <textarea name="sub_question_c" id="builder_sub_question_c" class="form-control form-control-sm" rows="1" required></textarea>
+                                            <input type="hidden" name="sub_question_c_id" id="builder_sub_question_c_id">
+                                        </div>
                                         </div>
                                     </div>
                                     <!-- Slot ঘ -->
@@ -198,6 +204,8 @@
                                                 <button type="button" class="btn btn-sm btn-info text-white" onclick="openBuilderBankModal('higher_ability', 'sub_question_d')">🔍 Browse Bank</button>
                                             </div>
                                             <textarea name="sub_question_d" id="builder_sub_question_d" class="form-control form-control-sm" rows="1"></textarea>
+                                            <input type="hidden" name="sub_question_d_id" id="builder_sub_question_d_id">
+                                        </div>
                                         </div>
                                     </div>
                                 </div>
@@ -353,7 +361,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 let html = '<div class="list-group">';
                 data.forEach(q => {
                     html += `
-                        <button type="button" class="list-group-item list-group-item-action" onclick="selectBuilderQuestion('${q.question_text.replace(/'/g, "\\'")}')">
+                        <button type="button" class="list-group-item list-group-item-action" onclick="selectBuilderQuestion('${q.question_text.replace(/'/g, "\\'")}', ${q.id})">
                             <div class="d-flex w-100 justify-content-between mb-1">
                                 <h6 class="mb-1 text-primary">Question:</h6>
                                 <small class="badge bg-secondary">${q.marks} Marks</small>
@@ -372,10 +380,11 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     };
 
-    window.selectBuilderQuestion = function(text) {
+    window.selectBuilderQuestion = function(text, id) {
         // Improved regex to handle various metadata formats like [Ch-1, Set-1] or (Chapter 1, Set 5)
         const cleanText = text.replace(/\s?(\[Ch-\d+, Set-\d+\]|\(Chapter \d+, Set \d+\))$/i, '');
         document.getElementById('builder_' + builderActiveTargetId).value = cleanText;
+        document.getElementById('builder_' + builderActiveTargetId + '_id').value = id;
         builderBankModal.hide();
     };
 });

@@ -22,6 +22,10 @@ class CqQuestion extends Model
         'sub_question_c_marks',
         'sub_question_d',
         'sub_question_d_marks',
+        'sub_question_a_id',
+        'sub_question_b_id',
+        'sub_question_c_id',
+        'sub_question_d_id',
         'total_marks',
         'difficulty_level',
         'status',
@@ -32,6 +36,10 @@ class CqQuestion extends Model
         'sub_question_b_marks' => 'decimal:2',
         'sub_question_c_marks' => 'decimal:2',
         'sub_question_d_marks' => 'decimal:2',
+        'sub_question_a_id' => 'integer',
+        'sub_question_b_id' => 'integer',
+        'sub_question_c_id' => 'integer',
+        'sub_question_d_id' => 'integer',
         'total_marks' => 'decimal:2',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
@@ -44,6 +52,38 @@ class CqQuestion extends Model
     public function chapter()
     {
         return $this->belongsTo(CqChapter::class, 'chapter_id');
+    }
+
+    /**
+     * Relationship: Sub-question A (from bank)
+     */
+    public function subQuestionA()
+    {
+        return $this->belongsTo(ChapterQuestion::class, 'sub_question_a_id');
+    }
+
+    /**
+     * Relationship: Sub-question B (from bank)
+     */
+    public function subQuestionB()
+    {
+        return $this->belongsTo(ChapterQuestion::class, 'sub_question_b_id');
+    }
+
+    /**
+     * Relationship: Sub-question C (from bank)
+     */
+    public function subQuestionC()
+    {
+        return $this->belongsTo(ChapterQuestion::class, 'sub_question_c_id');
+    }
+
+    /**
+     * Relationship: Sub-question D (from bank)
+     */
+    public function subQuestionD()
+    {
+        return $this->belongsTo(ChapterQuestion::class, 'sub_question_d_id');
     }
 
     /**

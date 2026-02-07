@@ -6,6 +6,7 @@ use Illuminate\Database\Seeder;
 use App\Models\CqSubject;
 use App\Models\CqChapter;
 use App\Models\ChapterQuestion;
+use App\Models\CqQuestion;
 
 class QBankSeederICT extends Seeder
 {
@@ -84,11 +85,47 @@ class QBankSeederICT extends Seeder
                     ]);
                 }
             }
+
+            // 3. Create sample Creative Questions (CQs) using parts from bank
+            for ($k = 1; $k <= 2; $k++) {
+                $q_a = ChapterQuestion::where('chapter_id', $chapter->id)->where('question_type', 'knowledge')->inRandomOrder()->first();
+                $q_b = ChapterQuestion::where('chapter_id', $chapter->id)->where('question_type', 'comprehension')->inRandomOrder()->first();
+                $q_c = ChapterQuestion::where('chapter_id', $chapter->id)->where('question_type', 'application')->inRandomOrder()->first();
+                $q_d = ChapterQuestion::where('chapter_id', $chapter->id)->where('question_type', 'higher_ability')->inRandomOrder()->first();
+
+                if ($q_a && $q_b && $q_c) {
+                    $marks_a = $q_a->marks;
+                    $marks_b = $q_b->marks;
+                    $marks_c = $q_c->marks;
+                    $marks_d = $q_d ? $q_d->marks : 0;
+
+                    CqQuestion::create([
+                        'chapter_id' => $chapter->id,
+                        'question_stem' => "এটি অধ্যায় " . $chapterNumber . " এর একটি নমুনা উদ্দীপক (Set " . $k . ")। এই সৃজনশীল প্রশ্নটি ব্যাংক থেকে তৈরি করা হয়েছে।",
+                        'sub_question_a' => $q_a->question_text,
+                        'sub_question_a_id' => $q_a->id,
+                        'sub_question_a_marks' => $marks_a,
+                        'sub_question_b' => $q_b->question_text,
+                        'sub_question_b_id' => $q_b->id,
+                        'sub_question_b_marks' => $marks_b,
+                        'sub_question_c' => $q_c->question_text,
+                        'sub_question_c_id' => $q_c->id,
+                        'sub_question_c_marks' => $marks_c,
+                        'sub_question_d' => $q_d ? $q_d->question_text : null,
+                        'sub_question_d_id' => $q_d ? $q_d->id : null,
+                        'sub_question_d_marks' => $marks_d,
+                        'total_marks' => $marks_a + $marks_b + $marks_c + $marks_d,
+                        'difficulty_level' => 'medium',
+                        'status' => 'active',
+                    ]);
+                }
+            }
         }
 
         $this->command->info('✓ ICT System seeded successfully!');
         $this->command->info('  - 1 Subject (ICT) created');
         $this->command->info('  - 8 Chapters created');
-        $this->command->info('  - 160 Q&A Questions created (5 per type per chapter)');
+        $this->command->info('  - 160 Q&A Questions created in Bank');
+        $this->command->info('  - 16 Creative Questions (CQs) assembled from Bank');
     }
 }

@@ -28,7 +28,7 @@
 
     <!-- The Exam Paper -->
     <div class="card border-0 shadow-sm mx-auto" style="max-width: 800px; padding: 40px; background-color: white;">
-        <div class="exam-header text-center mb-5">
+        <div class="exam-header text-center mb-2">
             <h2 class="mb-1 text-uppercase">{{ $set->exam_name }}</h2>
             <h4 class="mb-2">{{ $set->subject->subject_name }}</h4>
             <div class="d-flex justify-content-between border-top border-bottom py-2 mt-4">
@@ -48,11 +48,11 @@
 
         <div class="exam-body">
             @forelse($set->questions->sortBy('pivot.question_order') as $question)
-                <div class="question-container mb-5">
+                <div class="question-container mb-2">
                     <div class="d-flex">
                         <div class="fw-bold pe-2">{{ $loop->iteration }}.</div>
                         <div class="flex-grow-1">
-                            <div class="question-stem mb-3 text-justify">
+                            <div class="question-stem mb-1 text-justify">
                                 {!! nl2br(e($question->question_stem)) !!}
                             </div>
                             
