@@ -219,6 +219,24 @@ class AdminCqSetController extends Controller
     }
 
     /**
+     * Preview question paper with answers
+     */
+    public function ansPreview($id)
+    {
+        $admin = Auth::guard('admin')->user();
+        $set = CqSet::with([
+            'subject', 
+            'questions.chapter',
+            'questions.subQuestionA',
+            'questions.subQuestionB',
+            'questions.subQuestionC',
+            'questions.subQuestionD'
+        ])->findOrFail($id);
+        
+        return view('admin.cq.sets.ans_preview', compact('admin', 'set'));
+    }
+
+    /**
      * Generate PDF
      */
     public function generatePdf($id)

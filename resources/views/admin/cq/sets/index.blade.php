@@ -99,6 +99,9 @@
                                             <a href="{{ route('admin.cq.sets.preview', $set->id) }}" class="btn btn-outline-info" title="Preview Paper">
                                                 👁️
                                             </a>
+                                            <a href="{{ route('admin.cq.sets.ansPreview', $set->id) }}" class="btn btn-outline-success" title="Preview with Answers">
+                                                ✅
+                                            </a>
                                             <a href="{{ route('admin.cq.sets.addQuestions', $set->id) }}" class="btn btn-outline-primary" title="Manage Questions">
                                                 ➕ Q
                                             </a>

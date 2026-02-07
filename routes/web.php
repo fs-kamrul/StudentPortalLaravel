@@ -145,6 +145,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::post('/{id}/questions', [\App\Http\Controllers\AdminCqSetController::class, 'storeQuestions'])->name('storeQuestions');
             Route::post('/{id}/build-cq', [\App\Http\Controllers\AdminCqSetController::class, 'buildFromBank'])->name('buildCq');
             Route::get('/{id}/preview', [\App\Http\Controllers\AdminCqSetController::class, 'preview'])->name('preview');
+            Route::get('/{id}/ans-preview', [\App\Http\Controllers\AdminCqSetController::class, 'ansPreview'])->name('ansPreview');
             Route::get('/{id}/pdf', [\App\Http\Controllers\AdminCqSetController::class, 'generatePdf'])->name('pdf');
         });
 
