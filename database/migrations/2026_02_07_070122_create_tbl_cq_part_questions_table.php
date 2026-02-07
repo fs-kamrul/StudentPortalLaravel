@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tbl_cq_part_questions', function (Blueprint $table) {
+        Schema::create('cp_part_questions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('chapter_id')->constrained('tbl_cq_chapters')->onDelete('cascade');
+            $table->foreignId('chapter_id')->constrained('cp_chapters')->onDelete('cascade');
             $table->enum('question_type', ['knowledge', 'comprehension', 'application', 'higher_ability']);
             $table->text('question_text');
             $table->longText('answer_text');
@@ -26,6 +26,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('tbl_cq_part_questions');
+        Schema::dropIfExists('cp_part_questions');
     }
 };

@@ -10,7 +10,7 @@ class ChapterQuestion extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $table = 'tbl_cq_part_questions';
+    protected $table = 'cp_part_questions';
 
     protected $fillable = [
         'chapter_id',

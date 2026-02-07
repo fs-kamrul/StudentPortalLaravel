@@ -174,13 +174,13 @@ class AdminCqSetController extends Controller
             'chapter_id' => 'required|exists:cp_chapters,id',
             'question_stem' => 'required|string',
             'sub_question_a' => 'required|string',
-            'sub_question_a_id' => 'nullable|exists:tbl_cq_part_questions,id',
+            'sub_question_a_id' => 'nullable|exists:cp_part_questions,id',
             'sub_question_b' => 'required|string',
-            'sub_question_b_id' => 'nullable|exists:tbl_cq_part_questions,id',
+            'sub_question_b_id' => 'nullable|exists:cp_part_questions,id',
             'sub_question_c' => 'required|string',
-            'sub_question_c_id' => 'nullable|exists:tbl_cq_part_questions,id',
+            'sub_question_c_id' => 'nullable|exists:cp_part_questions,id',
             'sub_question_d' => 'nullable|string',
-            'sub_question_d_id' => 'nullable|exists:tbl_cq_part_questions,id',
+            'sub_question_d_id' => 'nullable|exists:cp_part_questions,id',
             'difficulty_level' => 'required|in:easy,medium,hard',
         ]);
 

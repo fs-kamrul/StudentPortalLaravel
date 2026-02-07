@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('cp_questions', function (Blueprint $table) {
-            $table->foreignId('sub_question_a_id')->nullable()->after('sub_question_a')->constrained('tbl_cq_part_questions')->onDelete('set null');
-            $table->foreignId('sub_question_b_id')->nullable()->after('sub_question_b')->constrained('tbl_cq_part_questions')->onDelete('set null');
-            $table->foreignId('sub_question_c_id')->nullable()->after('sub_question_c')->constrained('tbl_cq_part_questions')->onDelete('set null');
-            $table->foreignId('sub_question_d_id')->nullable()->after('sub_question_d')->constrained('tbl_cq_part_questions')->onDelete('set null');
+            $table->foreignId('sub_question_a_id')->nullable()->after('sub_question_a')->constrained('cp_part_questions')->onDelete('set null');
+            $table->foreignId('sub_question_b_id')->nullable()->after('sub_question_b')->constrained('cp_part_questions')->onDelete('set null');
+            $table->foreignId('sub_question_c_id')->nullable()->after('sub_question_c')->constrained('cp_part_questions')->onDelete('set null');
+            $table->foreignId('sub_question_d_id')->nullable()->after('sub_question_d')->constrained('cp_part_questions')->onDelete('set null');
         });
     }
 
