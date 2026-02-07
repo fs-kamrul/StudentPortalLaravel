@@ -111,6 +111,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/subject/{subjectId}/create', [\App\Http\Controllers\AdminCqChapterController::class, 'create'])->name('create');
             Route::post('/', [\App\Http\Controllers\AdminCqChapterController::class, 'store'])->name('store');
             Route::get('/{id}/edit', [\App\Http\Controllers\AdminCqChapterController::class, 'edit'])->name('edit');
+            Route::post('/bulk-delete', [\App\Http\Controllers\AdminCqChapterController::class, 'bulkDestroy'])->name('bulkDelete');
             Route::put('/{id}', [\App\Http\Controllers\AdminCqChapterController::class, 'update'])->name('update');
             Route::delete('/{id}', [\App\Http\Controllers\AdminCqChapterController::class, 'destroy'])->name('destroy');
             Route::post('/{id}/restore', [\App\Http\Controllers\AdminCqChapterController::class, 'restore'])->name('restore');
@@ -142,18 +143,22 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::delete('/{id}/force', [\App\Http\Controllers\AdminCqSetController::class, 'forceDestroy'])->name('forceDestroy');
             Route::get('/{id}/add-questions', [\App\Http\Controllers\AdminCqSetController::class, 'addQuestions'])->name('addQuestions');
             Route::post('/{id}/questions', [\App\Http\Controllers\AdminCqSetController::class, 'storeQuestions'])->name('storeQuestions');
+            Route::post('/{id}/build-cq', [\App\Http\Controllers\AdminCqSetController::class, 'buildFromBank'])->name('buildCq');
             Route::get('/{id}/preview', [\App\Http\Controllers\AdminCqSetController::class, 'preview'])->name('preview');
             Route::get('/{id}/pdf', [\App\Http\Controllers\AdminCqSetController::class, 'generatePdf'])->name('pdf');
         });
 
         // CQ Part Questions (Question Bank - 4 Types)
-        Route::prefix('cq/qbank')->name('cq.part_questions.')->group(function () {
+            Route::prefix('cq/qbank')->name('cq.part_questions.')->group(function () {
             Route::get('/', [\App\Http\Controllers\AdminChapterQuestionController::class, 'index'])->name('index');
             Route::get('/create', [\App\Http\Controllers\AdminChapterQuestionController::class, 'create'])->name('create');
             Route::post('/', [\App\Http\Controllers\AdminChapterQuestionController::class, 'store'])->name('store');
             Route::get('/{id}/edit', [\App\Http\Controllers\AdminChapterQuestionController::class, 'edit'])->name('edit');
             Route::put('/{id}', [\App\Http\Controllers\AdminChapterQuestionController::class, 'update'])->name('update');
             Route::delete('/{id}', [\App\Http\Controllers\AdminChapterQuestionController::class, 'destroy'])->name('destroy');
+            
+            // API for construction
+            Route::get('/api/search', [\App\Http\Controllers\AdminChapterQuestionController::class, 'getBankQuestions'])->name('api.search');
         });
         
         Route::post('/logout', [\App\Http\Controllers\AdminAuthController::class, 'logout'])->name('logout');

@@ -36,9 +36,14 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-10">
-                                        <label class="form-label"><strong>ক) Sub-question A</strong> <span class="text-danger">*</span></label>
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <label class="form-label mb-0"><strong>ক) Sub-question A</strong> <span class="text-danger">*</span></label>
+                                            <button type="button" class="btn btn-sm btn-outline-info" onclick="openBankModal('knowledge', 'sub_question_a')">
+                                                🔍 Browse Bank
+                                            </button>
+                                        </div>
                                         <textarea class="form-control @error('sub_question_a') is-invalid @enderror" 
-                                                  name="sub_question_a" rows="2" required>{{ old('sub_question_a') }}</textarea>
+                                                  id="sub_question_a" name="sub_question_a" rows="2" required>{{ old('sub_question_a') }}</textarea>
                                         @error('sub_question_a')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -46,7 +51,7 @@
                                     <div class="col-md-2">
                                         <label class="form-label">Marks <span class="text-danger">*</span></label>
                                         <input type="number" step="0.01" class="form-control @error('sub_question_a_marks') is-invalid @enderror" 
-                                               name="sub_question_a_marks" value="{{ old('sub_question_a_marks') }}" min="0" required>
+                                               name="sub_question_a_marks" value="{{ old('sub_question_a_marks', 1) }}" min="0" required>
                                         @error('sub_question_a_marks')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -60,9 +65,14 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-10">
-                                        <label class="form-label"><strong>খ) Sub-question B</strong> <span class="text-danger">*</span></label>
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <label class="form-label mb-0"><strong>খ) Sub-question B</strong> <span class="text-danger">*</span></label>
+                                            <button type="button" class="btn btn-sm btn-outline-info" onclick="openBankModal('comprehension', 'sub_question_b')">
+                                                🔍 Browse Bank
+                                            </button>
+                                        </div>
                                         <textarea class="form-control @error('sub_question_b') is-invalid @enderror" 
-                                                  name="sub_question_b" rows="2" required>{{ old('sub_question_b') }}</textarea>
+                                                  id="sub_question_b" name="sub_question_b" rows="2" required>{{ old('sub_question_b') }}</textarea>
                                         @error('sub_question_b')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -70,7 +80,7 @@
                                     <div class="col-md-2">
                                         <label class="form-label">Marks <span class="text-danger">*</span></label>
                                         <input type="number" step="0.01" class="form-control @error('sub_question_b_marks') is-invalid @enderror" 
-                                               name="sub_question_b_marks" value="{{ old('sub_question_b_marks') }}" min="0" required>
+                                               name="sub_question_b_marks" value="{{ old('sub_question_b_marks', 2) }}" min="0" required>
                                         @error('sub_question_b_marks')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -84,9 +94,14 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-10">
-                                        <label class="form-label"><strong>গ) Sub-question C</strong> <span class="text-danger">*</span></label>
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <label class="form-label mb-0"><strong>গ) Sub-question C</strong> <span class="text-danger">*</span></label>
+                                            <button type="button" class="btn btn-sm btn-outline-info" onclick="openBankModal('application', 'sub_question_c')">
+                                                🔍 Browse Bank
+                                            </button>
+                                        </div>
                                         <textarea class="form-control @error('sub_question_c') is-invalid @enderror" 
-                                                  name="sub_question_c" rows="2" required>{{ old('sub_question_c') }}</textarea>
+                                                  id="sub_question_c" name="sub_question_c" rows="2" required>{{ old('sub_question_c') }}</textarea>
                                         @error('sub_question_c')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -94,7 +109,7 @@
                                     <div class="col-md-2">
                                         <label class="form-label">Marks <span class="text-danger">*</span></label>
                                         <input type="number" step="0.01" class="form-control @error('sub_question_c_marks') is-invalid @enderror" 
-                                               name="sub_question_c_marks" value="{{ old('sub_question_c_marks') }}" min="0" required>
+                                               name="sub_question_c_marks" value="{{ old('sub_question_c_marks', 3) }}" min="0" required>
                                         @error('sub_question_c_marks')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -108,9 +123,14 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-10">
-                                        <label class="form-label"><strong>ঘ) Sub-question D</strong> (Optional)</label>
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <label class="form-label mb-0"><strong>ঘ) Sub-question D</strong> (Optional)</label>
+                                            <button type="button" class="btn btn-sm btn-outline-info" onclick="openBankModal('higher_ability', 'sub_question_d')">
+                                                🔍 Browse Bank
+                                            </button>
+                                        </div>
                                         <textarea class="form-control @error('sub_question_d') is-invalid @enderror" 
-                                                  name="sub_question_d" rows="2">{{ old('sub_question_d') }}</textarea>
+                                                  id="sub_question_d" name="sub_question_d" rows="2">{{ old('sub_question_d') }}</textarea>
                                         @error('sub_question_d')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -118,7 +138,7 @@
                                     <div class="col-md-2">
                                         <label class="form-label">Marks</label>
                                         <input type="number" step="0.01" class="form-control @error('sub_question_d_marks') is-invalid @enderror" 
-                                               name="sub_question_d_marks" value="{{ old('sub_question_d_marks') }}" min="0">
+                                               name="sub_question_d_marks" value="{{ old('sub_question_d_marks', 4) }}" min="0">
                                         @error('sub_question_d_marks')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -167,4 +187,89 @@
         </div>
     </div>
 </div>
+
+<!-- Question Bank Modal -->
+<div class="modal fade" id="bankModal" tabindex="-1" aria-labelledby="bankModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header bg-info text-white">
+                <h5 class="modal-title" id="bankModalLabel">📚 Browse Question Bank</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="bankLoader" class="text-center py-4 d-none">
+                    <div class="spinner-border text-primary" role="status"></div>
+                    <p class="mt-2 text-muted">Loading questions from bank...</p>
+                </div>
+                <div id="bankContent">
+                    <!-- Questions will be loaded here via AJAX -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @endsection
+
+@push('scripts')
+<script>
+    let activeTargetId = '';
+    const bankModal = new bootstrap.Modal(document.getElementById('bankModal'));
+
+    function openBankModal(type, targetId) {
+        activeTargetId = targetId;
+        const loader = document.getElementById('bankLoader');
+        const content = document.getElementById('bankContent');
+        
+        loader.classList.remove('d-none');
+        content.innerHTML = '';
+        
+        const chapterId = "{{ $chapter->id }}";
+        const url = "{{ route('admin.cq.part_questions.api.search') }}?chapter_id=" + chapterId + "&question_type=" + type;
+
+        bankModal.show();
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                loader.classList.add('d-none');
+                if (data.length === 0) {
+                    content.innerHTML = '<div class="alert alert-warning">No questions of this type found for this chapter in the bank.</div>';
+                    return;
+                }
+
+                let html = '<div class="list-group">';
+                data.forEach(q => {
+                    html += `
+                        <button type="button" class="list-group-item list-group-item-action" onclick="selectQuestion('${q.question_text.replace(/'/g, "\\'")}')">
+                            <div class="d-flex w-100 justify-content-between mb-1">
+                                <h6 class="mb-1 text-primary">Question:</h6>
+                                <small class="badge bg-secondary">${q.marks} Marks</small>
+                            </div>
+                            <p class="mb-1 fw-bold">${q.question_text}</p>
+                            <hr class="my-1">
+                            <small class="text-muted"><strong>Answer hint:</strong> ${q.answer_text.substring(0, 100)}...</small>
+                        </button>
+                    `;
+                });
+                html += '</div>';
+                content.innerHTML = html;
+            })
+            .catch(error => {
+                loader.classList.add('d-none');
+                content.innerHTML = '<div class="alert alert-danger">Error loading questions.</div>';
+                console.error('Error:', error);
+            });
+    }
+
+    function selectQuestion(text) {
+        // Remove Ch-X, Set-X marker if present in seeded data
+        const cleanText = text.replace(/\s\[Ch-\d+, Set-\d+\]$/, '');
+        document.getElementById(activeTargetId).value = cleanText;
+        bankModal.hide();
+    }
+</script>
+@endpush

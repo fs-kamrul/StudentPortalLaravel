@@ -159,4 +159,27 @@ class AdminChapterQuestionController extends Controller
 
         return back()->with('success', 'Question moved to trash.');
     }
+
+    /**
+     * API: Get bank questions as JSON
+     */
+    public function getBankQuestions(Request $request)
+    {
+        $chapterId = $request->get('chapter_id');
+        $type = $request->get('question_type');
+
+        $query = ChapterQuestion::where('status', 'active');
+
+        if ($chapterId) {
+            $query->where('chapter_id', $chapterId);
+        }
+
+        if ($type) {
+            $query->where('question_type', $type);
+        }
+
+        $questions = $query->get(['id', 'question_text', 'answer_text', 'question_type', 'marks']);
+
+        return response()->json($questions);
+    }
 }

@@ -25,5 +25,6 @@ class DatabaseSeeder extends Seeder
         // Seed CQ System
         $this->call(CqSystemSeeder::class);
         $this->call(QBankSeeder::class);
+        $this->call(QBankSeederICT::class);
     }
 }

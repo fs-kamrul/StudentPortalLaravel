@@ -145,4 +145,38 @@ class AdminCqChapterController extends Controller
             ->route('admin.cq.chapters.index', $subjectId)
             ->with('success', 'Chapter permanently deleted: ' . $chapterName);
     }
+
+    /**
+     * Bulk delete chapters
+     */
+    public function bulkDestroy(Request $request)
+    {
+        $ids = $request->input('ids', []);
+        
+        if (empty($ids)) {
+            return redirect()->back()->with('error', 'No chapters selected for deletion.');
+        }
+
+        $chapters = CqChapter::whereIn('id', $ids)->get();
+        $deletedCount = 0;
+        $skippedCount = 0;
+
+        foreach ($chapters as $chapter) {
+            // Check for questions/part questions
+            if ($chapter->questions()->count() > 0 || $chapter->partQuestions()->count() > 0) {
+                $skippedCount++;
+                continue;
+            }
+            
+            $chapter->delete();
+            $deletedCount++;
+        }
+
+        $message = $deletedCount . ' chapters deleted successfully.';
+        if ($skippedCount > 0) {
+            $message .= ' ' . $skippedCount . ' chapters were skipped because they contain questions.';
+        }
+
+        return redirect()->back()->with($deletedCount > 0 ? 'success' : 'error', $message);
+    }
 }

@@ -122,8 +122,11 @@ class AdminCqSetController extends Controller
         ->where('status', 'active')
         ->orderBy('chapter_id')
         ->get();
+
+        // Get all chapters for the subject to show in builder dropdown
+        $allChapters = $set->subject->chapters()->where('status', 'active')->orderBy('chapter_number')->get();
         
-        return view('admin.cq.sets.add_questions', compact('admin', 'set', 'availableQuestions'));
+        return view('admin.cq.sets.add_questions', compact('admin', 'set', 'availableQuestions', 'allChapters'));
     }
 
     /**
@@ -158,6 +161,46 @@ class AdminCqSetController extends Controller
         return redirect()
             ->route('admin.cq.sets.edit', $set->id)
             ->with('success', count($questions) . ' questions added to set. Total marks: ' . $set->total_marks);
+    }
+
+    /**
+     * Build and store a new CQ from bank parts
+     */
+    public function buildFromBank(Request $request, $id)
+    {
+        $set = CqSet::findOrFail($id);
+        
+        $validated = $request->validate([
+            'chapter_id' => 'required|exists:cp_chapters,id',
+            'question_stem' => 'required|string',
+            'sub_question_a' => 'required|string',
+            'sub_question_b' => 'required|string',
+            'sub_question_c' => 'required|string',
+            'sub_question_d' => 'nullable|string',
+            'difficulty_level' => 'required|in:easy,medium,hard',
+        ]);
+
+        // Static marks for Bangladesh pattern
+        $validated['sub_question_a_marks'] = 1;
+        $validated['sub_question_b_marks'] = 2;
+        $validated['sub_question_c_marks'] = 3;
+        $validated['sub_question_d_marks'] = $validated['sub_question_d'] ? 4 : 0;
+        $validated['status'] = 'active';
+
+        // Create the full CQ
+        $question = CqQuestion::create($validated);
+
+        // Attach to set (at the end)
+        $maxOrder = $set->questions()->max('question_order') ?? 0;
+        $set->questions()->attach($question->id, ['question_order' => $maxOrder + 1]);
+
+        // Update total marks
+        $set->total_marks = $set->calculateTotalMarks();
+        $set->save();
+
+        return redirect()
+            ->route('admin.cq.sets.addQuestions', $set->id)
+            ->with('success', 'New Creative Question built from bank and added to set!');
     }
 
     /**
