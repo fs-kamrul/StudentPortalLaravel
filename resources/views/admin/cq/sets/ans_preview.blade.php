@@ -23,7 +23,7 @@
 
     <!-- The Q&A Document -->
     <div class="card border-0 shadow-sm mx-auto" style="max-width: 900px; padding: 40px; background-color: white;">
-        <div class="exam-header text-center mb-4 pb-3 border-bottom">
+        <div class="exam-header text-center mb-3 pb-3 border-bottom">
             <h2 class="mb-1 text-uppercase">{{ $set->exam_name }}</h2>
             <h4 class="mb-2">{{ $set->subject->subject_name }} - Solution Paper</h4>
             <div class="d-flex justify-content-center gap-4 mt-3">
@@ -32,19 +32,23 @@
                 <div><strong>Date:</strong> {{ date('d M, Y') }}</div>
             </div>
         </div>
-
+        @if($set->instructions)
+            <div class="instructions mb-2">
+                <strong>নির্দেশনা:</strong> {{ $set->instructions }}
+            </div>
+        @endif
         <div class="exam-body">
             @forelse($set->questions->sortBy('pivot.question_order') as $question)
-                <div class="question-answer-block mb-5 pb-4 border-bottom">
+                <div class="question-answer-block mb-3 pb-2 border-bottom">
                     <div class="d-flex mb-3">
                         <div class="fw-bold pe-2" style="font-size: 1.25rem;">{{ $loop->iteration }}.</div>
                         <div class="flex-grow-1">
-                            <div class="question-stem mb-3 text-justify fw-bold">
+                            <div class="question-stem mb-1 text-justify fw-bold">
                                 {!! nl2br(e($question->question_stem)) !!}
                             </div>
 
                             <!-- Part A -->
-                            <div class="part-container mb-4">
+                            <div class="part-container mb-2">
                                 <div class="d-flex justify-content-between align-items-start mb-2 bg-light p-2 rounded">
                                     <div class="fw-bold">ক) {{ $question->sub_question_a }}</div>
                                     <span class="badge bg-secondary">{{ intval($question->sub_question_a_marks) }}</span>
@@ -60,7 +64,7 @@
                             </div>
 
                             <!-- Part B -->
-                            <div class="part-container mb-4">
+                            <div class="part-container mb-2">
                                 <div class="d-flex justify-content-between align-items-start mb-2 bg-light p-2 rounded">
                                     <div class="fw-bold">খ) {{ $question->sub_question_b }}</div>
                                     <span class="badge bg-secondary">{{ intval($question->sub_question_b_marks) }}</span>
@@ -76,7 +80,7 @@
                             </div>
 
                             <!-- Part C -->
-                            <div class="part-container mb-4">
+                            <div class="part-container mb-2">
                                 <div class="d-flex justify-content-between align-items-start mb-2 bg-light p-2 rounded">
                                     <div class="fw-bold">গ) {{ $question->sub_question_c }}</div>
                                     <span class="badge bg-secondary">{{ intval($question->sub_question_c_marks) }}</span>
