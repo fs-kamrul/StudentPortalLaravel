@@ -94,6 +94,19 @@
                     </a>
                 </div>
 
+                <!-- Creative Questions -->
+                <div class="menu-section">
+                    <div class="menu-section-title">Creative Questions</div>
+                    <a href="{{ route('admin.cq.subjects.index') }}" class="menu-item {{ request()->routeIs('admin.cq.subjects.*') || request()->routeIs('admin.cq.chapters.*') || request()->routeIs('admin.cq.questions.*') ? 'active' : '' }}">
+                        <span class="menu-icon">📚</span>
+                        <span class="menu-text">Subjects</span>
+                    </a>
+                    <a href="{{ route('admin.cq.sets.index') }}" class="menu-item {{ request()->routeIs('admin.cq.sets.*') ? 'active' : '' }}">
+                        <span class="menu-icon">📝</span>
+                        <span class="menu-text">Question Sets</span>
+                    </a>
+                </div>
+
                 <!-- Reports -->
                 <div class="menu-section">
                     <div class="menu-section-title">Reports</div>

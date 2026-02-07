@@ -92,7 +92,60 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/change-password', [\App\Http\Controllers\AdminAuthController::class, 'showChangePasswordForm'])->name('password.change');
         Route::post('/change-password', [\App\Http\Controllers\AdminAuthController::class, 'changePassword'])->name('password.update');
         
+        // Creative Questions (CQ) Routes
+        // CQ Subject Routes
+        Route::prefix('cq/subjects')->name('cq.subjects.')->group(function () {
+            Route::get('/', [\App\Http\Controllers\AdminCqSubjectController::class, 'index'])->name('index');
+            Route::get('/create', [\App\Http\Controllers\AdminCqSubjectController::class, 'create'])->name('create');
+            Route::post('/', [\App\Http\Controllers\AdminCqSubjectController::class, 'store'])->name('store');
+            Route::get('/{id}/edit', [\App\Http\Controllers\AdminCqSubjectController::class, 'edit'])->name('edit');
+            Route::put('/{id}', [\App\Http\Controllers\AdminCqSubjectController::class, 'update'])->name('update');
+            Route::delete('/{id}', [\App\Http\Controllers\AdminCqSubjectController::class, 'destroy'])->name('destroy');
+            Route::post('/{id}/restore', [\App\Http\Controllers\AdminCqSubjectController::class, 'restore'])->name('restore');
+            Route::delete('/{id}/force', [\App\Http\Controllers\AdminCqSubjectController::class, 'forceDestroy'])->name('forceDestroy');
+        });
+
+        // CQ Chapter Routes
+        Route::prefix('cq/chapters')->name('cq.chapters.')->group(function () {
+            Route::get('/subject/{subjectId}', [\App\Http\Controllers\AdminCqChapterController::class, 'index'])->name('index');
+            Route::get('/subject/{subjectId}/create', [\App\Http\Controllers\AdminCqChapterController::class, 'create'])->name('create');
+            Route::post('/', [\App\Http\Controllers\AdminCqChapterController::class, 'store'])->name('store');
+            Route::get('/{id}/edit', [\App\Http\Controllers\AdminCqChapterController::class, 'edit'])->name('edit');
+            Route::put('/{id}', [\App\Http\Controllers\AdminCqChapterController::class, 'update'])->name('update');
+            Route::delete('/{id}', [\App\Http\Controllers\AdminCqChapterController::class, 'destroy'])->name('destroy');
+            Route::post('/{id}/restore', [\App\Http\Controllers\AdminCqChapterController::class, 'restore'])->name('restore');
+            Route::delete('/{id}/force', [\App\Http\Controllers\AdminCqChapterController::class, 'forceDestroy'])->name('forceDestroy');
+        });
+
+        // CQ Question Routes
+        Route::prefix('cq/questions')->name('cq.questions.')->group(function () {
+            Route::get('/chapter/{chapterId}', [\App\Http\Controllers\AdminCqQuestionController::class, 'index'])->name('index');
+            Route::get('/chapter/{chapterId}/create', [\App\Http\Controllers\AdminCqQuestionController::class, 'create'])->name('create');
+            Route::post('/', [\App\Http\Controllers\AdminCqQuestionController::class, 'store'])->name('store');
+            Route::get('/{id}', [\App\Http\Controllers\AdminCqQuestionController::class, 'show'])->name('show');
+            Route::get('/{id}/edit', [\App\Http\Controllers\AdminCqQuestionController::class, 'edit'])->name('edit');
+            Route::put('/{id}', [\App\Http\Controllers\AdminCqQuestionController::class, 'update'])->name('update');
+            Route::delete('/{id}', [\App\Http\Controllers\AdminCqQuestionController::class, 'destroy'])->name('destroy');
+            Route::post('/{id}/restore', [\App\Http\Controllers\AdminCqQuestionController::class, 'restore'])->name('restore');
+            Route::delete('/{id}/force', [\App\Http\Controllers\AdminCqQuestionController::class, 'forceDestroy'])->name('forceDestroy');
+        });
+
+        // CQ Set Routes
+        Route::prefix('cq/sets')->name('cq.sets.')->group(function () {
+            Route::get('/', [\App\Http\Controllers\AdminCqSetController::class, 'index'])->name('index');
+            Route::get('/create', [\App\Http\Controllers\AdminCqSetController::class, 'create'])->name('create');
+            Route::post('/', [\App\Http\Controllers\AdminCqSetController::class, 'store'])->name('store');
+            Route::get('/{id}/edit', [\App\Http\Controllers\AdminCqSetController::class, 'edit'])->name('edit');
+            Route::put('/{id}', [\App\Http\Controllers\AdminCqSetController::class, 'update'])->name('update');
+            Route::delete('/{id}', [\App\Http\Controllers\AdminCqSetController::class, 'destroy'])->name('destroy');
+            Route::post('/{id}/restore', [\App\Http\Controllers\AdminCqSetController::class, 'restore'])->name('restore');
+            Route::delete('/{id}/force', [\App\Http\Controllers\AdminCqSetController::class, 'forceDestroy'])->name('forceDestroy');
+            Route::get('/{id}/add-questions', [\App\Http\Controllers\AdminCqSetController::class, 'addQuestions'])->name('addQuestions');
+            Route::post('/{id}/questions', [\App\Http\Controllers\AdminCqSetController::class, 'storeQuestions'])->name('storeQuestions');
+            Route::get('/{id}/preview', [\App\Http\Controllers\AdminCqSetController::class, 'preview'])->name('preview');
+            Route::get('/{id}/pdf', [\App\Http\Controllers\AdminCqSetController::class, 'generatePdf'])->name('pdf');
+        });
+        
         Route::post('/logout', [\App\Http\Controllers\AdminAuthController::class, 'logout'])->name('logout');
     });
 });
-
