@@ -102,9 +102,14 @@
                         <span class="menu-text">Subjects</span>
                     </a>
                     <a href="{{ route('admin.cq.sets.index') }}" class="menu-item {{ request()->routeIs('admin.cq.sets.*') ? 'active' : '' }}">
-                        <span class="menu-icon">📝</span>
-                        <span class="menu-text">Question Sets</span>
-                    </a>
+        <span class="menu-icon">📝</span>
+        <span class="menu-text">Question Sets</span>
+    </a>
+    <a href="{{ route('admin.cq.part_questions.index') }}" class="menu-item {{ request()->routeIs('admin.cq.part_questions.*') ? 'active' : '' }}">
+        <span class="menu-icon">📚</span>
+        <span class="menu-text">Question Bank</span>
+    </a>
+</div>
                 </div>
 
                 <!-- Reports -->

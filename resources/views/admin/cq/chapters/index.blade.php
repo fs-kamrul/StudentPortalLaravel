@@ -55,7 +55,10 @@
                                     <td><strong>{{ $chapter->chapter_number }}</strong></td>
                                     <td>{{ $chapter->chapter_name }}</td>
                                     <td>
-                                        <span class="badge bg-info">{{ $chapter->questions_count }} questions</span>
+                                        <div class="d-flex flex-column gap-1">
+                                            <span class="badge bg-info">{{ $chapter->questions_count }} CQs</span>
+                                            <span class="badge bg-primary">{{ $chapter->part_questions_count }} QBank items</span>
+                                        </div>
                                     </td>
                                     <td>
                                         @if($chapter->status == 'active')
@@ -68,6 +71,12 @@
                                         <div class="btn-group btn-group-sm" role="group">
                                             <a href="{{ route('admin.cq.questions.index', $chapter->id) }}" class="btn btn-outline-primary">
                                                 📝 Questions
+                                            </a>
+                                            <a href="{{ route('admin.cq.part_questions.index', ['subject_id' => $subject->id, 'chapter_id' => $chapter->id]) }}" class="btn btn-outline-info" title="View in Question Bank">
+                                                📚 QBank
+                                            </a>
+                                            <a href="{{ route('admin.cq.part_questions.create', ['chapter_id' => $chapter->id]) }}" class="btn btn-info text-white" title="Add to Question Bank">
+                                                +
                                             </a>
                                             <a href="{{ route('admin.cq.chapters.edit', $chapter->id) }}" class="btn btn-outline-secondary">
                                                 ✏️ Edit

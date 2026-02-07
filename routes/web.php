@@ -145,6 +145,16 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/{id}/preview', [\App\Http\Controllers\AdminCqSetController::class, 'preview'])->name('preview');
             Route::get('/{id}/pdf', [\App\Http\Controllers\AdminCqSetController::class, 'generatePdf'])->name('pdf');
         });
+
+        // CQ Part Questions (Question Bank - 4 Types)
+        Route::prefix('cq/qbank')->name('cq.part_questions.')->group(function () {
+            Route::get('/', [\App\Http\Controllers\AdminChapterQuestionController::class, 'index'])->name('index');
+            Route::get('/create', [\App\Http\Controllers\AdminChapterQuestionController::class, 'create'])->name('create');
+            Route::post('/', [\App\Http\Controllers\AdminChapterQuestionController::class, 'store'])->name('store');
+            Route::get('/{id}/edit', [\App\Http\Controllers\AdminChapterQuestionController::class, 'edit'])->name('edit');
+            Route::put('/{id}', [\App\Http\Controllers\AdminChapterQuestionController::class, 'update'])->name('update');
+            Route::delete('/{id}', [\App\Http\Controllers\AdminChapterQuestionController::class, 'destroy'])->name('destroy');
+        });
         
         Route::post('/logout', [\App\Http\Controllers\AdminAuthController::class, 'logout'])->name('logout');
     });

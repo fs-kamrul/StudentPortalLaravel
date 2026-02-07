@@ -85,6 +85,9 @@
                                     <td>{{ $subject->class_level ?? '-' }}</td>
                                     <td>
                                         <span class="badge bg-info">{{ $subject->chapters_count }} chapters</span>
+                                        <div class="mt-1">
+                                            <span class="badge bg-primary">{{ $subject->part_questions_count }} QBank items</span>
+                                        </div>
                                     </td>
                                     <td>
                                         @if($subject->status == 'active')

@@ -18,7 +18,7 @@ class AdminCqChapterController extends Controller
         $subject = CqSubject::findOrFail($subjectId);
         
         $chapters = $subject->chapters()
-            ->withCount('questions')
+            ->withCount(['questions', 'partQuestions'])
             ->orderBy('chapter_number')
             ->paginate(20);
         

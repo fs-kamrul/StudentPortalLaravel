@@ -42,6 +42,14 @@ class CqChapter extends Model
     }
 
     /**
+     * Get the category-based questions (QBank) for this chapter
+     */
+    public function partQuestions()
+    {
+        return $this->hasMany(ChapterQuestion::class, 'chapter_id');
+    }
+
+    /**
      * Get active questions only
      */
     public function activeQuestions()

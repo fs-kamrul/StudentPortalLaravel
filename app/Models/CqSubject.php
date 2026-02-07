@@ -42,6 +42,14 @@ class CqSubject extends Model
     }
 
     /**
+     * Get all part questions (QBank) for this subject through chapters
+     */
+    public function partQuestions()
+    {
+        return $this->hasManyThrough(ChapterQuestion::class, CqChapter::class, 'subject_id', 'chapter_id');
+    }
+
+    /**
      * Get active chapters only
      */
     public function activeChapters()

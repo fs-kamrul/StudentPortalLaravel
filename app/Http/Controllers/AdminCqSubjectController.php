@@ -19,7 +19,7 @@ class AdminCqSubjectController extends Controller
         $filterStatus = $request->get('status');
         
         // Build query
-        $query = CqSubject::withCount('chapters');
+        $query = CqSubject::withCount(['chapters', 'partQuestions']);
         
         // Apply filters
         if ($filterStatus) {

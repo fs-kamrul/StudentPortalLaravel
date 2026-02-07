@@ -47,6 +47,14 @@ class CqQuestion extends Model
     }
 
     /**
+     * Get all part questions (QBank) for the same chapter as this question
+     */
+    public function partQuestions()
+    {
+        return $this->hasMany(ChapterQuestion::class, 'chapter_id', 'chapter_id');
+    }
+
+    /**
      * Get the sets that include this question
      */
     public function sets()
